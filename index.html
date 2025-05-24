@@ -14,8 +14,8 @@ Date: 2025-05-05
 </head>
 <body>
   <header class="header">
-    <img src="https://static.wixstatic.com/media/afbb39_617140a20fbb47b2b858c0d3ef28a4ef~mv2.png" alt="Checkmark Logo" class="logo">
-    <h1 class="title">Chord Detector</h1>
+    <img src="https://static.wixstatic.com/media/afbb39_5d281518952249e58353d5e1d87b7514~mv2.png" alt="Checkmark Logo" class="logo">
+    <h1 class="title">Checkmark Chord Detector</h1>
   </header>
 
   <section class="controls">
@@ -23,7 +23,10 @@ Date: 2025-05-05
       <label for="midiDevice">Device:</label>
       <select id="midiDevice"></select>
     </div>
-    <button id="resetBtn" class="btn">Reset</button>
+    <div class="theme-toggle">
+      <label for="themeSwitch">Dark Mode:</label>
+      <input type="checkbox" id="themeSwitch">
+    </div>
   </section>
 
   <section class="chord-display">
@@ -32,20 +35,8 @@ Date: 2025-05-05
   </section>
 
   <main class="keyboard-container">
-    <!-- Keyboard will render here -->
     <canvas id="keyboardCanvas"></canvas>
   </main>
-
-  <footer class="footer-controls">
-    <div class="slider-group">
-      <label for="sensitivity">Sensitivity:</label>
-      <input type="range" id="sensitivity" min="0" max="500" value="200">
-    </div>
-    <div class="theme-toggle">
-      <label for="themeSwitch">Dark Mode:</label>
-      <input type="checkbox" id="themeSwitch">
-    </div>
-  </footer>
 
   <script src="midi.js"></script>
   <script src="keyboard.js"></script>
