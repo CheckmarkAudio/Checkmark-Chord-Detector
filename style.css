@@ -1,0 +1,131 @@
+/*
+Checkmark Chord Detector Styles
+Horizontal · Desktop Only · Centered Layout
+*/
+
+/* Global Reset and Base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, sans-serif;
+  background: #fff;
+  color: #000;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Dark Mode Overrides */
+body.dark-mode {
+  background: #000;
+  color: #fff;
+}
+body.dark-mode .btn {
+  background: #fff;
+  color: #000;
+}
+body.dark-mode .device-selector label,
+body.dark-mode .footer-controls label,
+body.dark-mode .chord-name,
+body.dark-mode .chord-info {
+  color: #fff;
+}
+body.dark-mode #keyboardCanvas {
+  border-color: #fff;
+}
+
+/* Header */
+.header {
+  background: #000;
+  padding: 20px;
+}
+.header .logo {
+  height: 60px;
+}
+.header .title {
+  color: #fff;
+  font-size: 2rem;
+  margin-top: 10px;
+}
+
+/* Controls Section */
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 15px 0;
+}
+.device-selector label,
+.footer-controls label {
+  font-size: 1rem;
+}
+.device-selector select {
+  padding: 5px 10px;
+  border: 1px solid #000;
+  border-radius: 4px;
+}
+.btn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Chord Display */
+.chord-display {
+  margin: 20px auto;
+}
+.chord-name {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+.chord-info {
+  font-size: 1rem;
+  color: #555;
+}
+
+/* Keyboard Container */
+.keyboard-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+  overflow-x: auto;
+}
+#keyboardCanvas {
+  /* Canvas dimensions set by script */
+  border: 1px solid #000;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Footer Controls */
+.footer-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  padding: 15px 0;
+}
+.slider-group,
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.slider-group input[type="range"] {
+  cursor: pointer;
+}
+.theme-toggle input[type="checkbox"] {
+  transform: scale(1.2);
+  cursor: pointer;
+}
