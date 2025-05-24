@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, onValue, set } from "firebase/database";
 
-// ←– paste in your config here:
+// ←– your chord-detector Firebase config
 const firebaseConfig = {
   apiKey: "AIzaSyBjLMo-wPGEGYcxj4O5NFW2DP-mrA-8EYY",
   authDomain: "checkmark-chord-detector.firebaseapp.com",
@@ -14,7 +14,7 @@ const firebaseConfig = {
   measurementId: "G-NXVRWBJ2HM"
 };
 
-// initialize
+// initialize Firebase
 const app      = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const params   = new URLSearchParams(window.location.search);
@@ -22,19 +22,27 @@ const session  = params.get("session") || "default";
 const notesRef = ref(database, `sessions/${session}/notes`);
 
 window.addEventListener("DOMContentLoaded", () => {
-  // 1️⃣ Monkey-patch your existing updateActiveNotes
-  if (typeof window.updateActiveNotes !== "function") {
-    console.warn("[firebase-sync] updateActiveNotes() not found on window");
-  } else {
-    const origUpdate = window.updateActiveNotes.bind(window);
-    window.updateActiveNotes = (note, on) => {
-      origUpdate(note, on);
-      // push to Firebase
+  // — wrap the original MIDI callbacks so they also write to Firebase
+  if (typeof window.onNoteOn === "function" && typeof window.onNoteOff === "function") {
+    // keep references to the originals
+    const origOn  = window.onNoteOn;
+    const origOff = window.onNoteOff;
+
+    // override onNoteOn and onNoteOff
+    window.onNoteOn = cb => origOn(n => {
+      cb(n);  // your chord detector sees the note
       set(notesRef, { notes: Array.from(window.activeNotes) });
-    };
+    });
+
+    window.onNoteOff = cb => origOff(n => {
+      cb(n);  // your chord detector removes the note
+      set(notesRef, { notes: Array.from(window.activeNotes) });
+    });
+  } else {
+    console.warn("[firebase-sync] MIDI hooks not found—make sure onNoteOn/Off are globals");
   }
 
-  // 2️⃣ Listen for remote changes
+  // — subscribe to remote changes and re-render
   onValue(notesRef, snap => {
     const data = snap.val()?.notes;
     if (Array.isArray(data)) {
